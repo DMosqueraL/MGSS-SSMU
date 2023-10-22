@@ -1,11 +1,10 @@
 import Header from '@/components/SolicitudesServicios/Header';
 import {useForm} from 'react-hook-form';
-import Swal from 'sweetalert2';
 import {ApiService} from '@/services/api.service';
 
 export default function alquilerPorHoras() {
 
-    const {register, formState: {errors}, handleSubmit, getValues} = useForm();
+    const {register, formState: {errors}, handleSubmit} = useForm();
     const apiService = new ApiService();
 
     const onSubmit = async function(data:any){

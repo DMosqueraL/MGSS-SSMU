@@ -1,7 +1,7 @@
 import Header from '@/components/SolicitudesServicios/Header';
 import Swal from 'sweetalert2';
 
-export default function Usuario() {
+export default function Socio() {
 
     const aceptarServicio = function() {
         Swal.fire({

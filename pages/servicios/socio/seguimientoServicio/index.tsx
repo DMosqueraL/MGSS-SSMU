@@ -3,7 +3,7 @@ import Map from '@/components/SolicitudesServicios/Map';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
-export default function seguimientoServicio() {
+export default function seguimientoServicioSocio() {
 
     useEffect(() => {
     }, [])
