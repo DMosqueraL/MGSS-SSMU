@@ -10,7 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,8 +21,11 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
     private final SolicitudServicioMapper mapper;
 
     @Override
-    public List<SolicitudServicio> listar() {
-        return repositorio.findAll();
+    public List<SolicitudServicioDto> listar() {
+        return repositorio.findAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Override
@@ -32,8 +35,11 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
     }
 
     @Override
-    public List<SolicitudServicio> buscarPorFecha(Date fecha) {
-        return repositorio.buscarPorFecha(fecha);
+    public List<SolicitudServicioDto> buscarPorFecha(LocalDate fecha) {
+        return repositorio.buscarPorFecha(fecha)
+                .stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Override

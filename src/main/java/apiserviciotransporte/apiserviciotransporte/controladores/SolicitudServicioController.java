@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/solicitud-servicio")
+@RequestMapping("/api/v1/solicitudes-servicios")
 @RequiredArgsConstructor
 public class SolicitudServicioController {
 
@@ -39,20 +40,28 @@ public class SolicitudServicioController {
                 .body(solicitudGuardada);
     }
 
-    @GetMapping(value = "/listar", consumes = "application/json", produces = "application/json")
-    public List<SolicitudServicio> listar() {
-        return servicioServicio.listar();
+    @GetMapping(value = "", produces = "application/json")
+    public ResponseEntity<List<SolicitudServicioDto>> listarSolicitudesDeServicio() {
+        List<SolicitudServicioDto> solicitudes = this.servicioServicio.listar();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(solicitudes);
     }
 
-    @GetMapping(value = "/obtener/{id}", consumes = "application/json", produces = "application/json")
+
+    @GetMapping(value = "/date/{fecha}", produces = "application/json")
+    public ResponseEntity<List<SolicitudServicioDto>> buscarPorFecha(@PathVariable("fecha") LocalDate fecha) {
+        List<SolicitudServicioDto> solicitudes = servicioServicio.buscarPorFecha(fecha);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(solicitudes);
+    }
+
+    @GetMapping(value = "/obtener/{id}", produces = "application/json")
     public SolicitudServicio obtener(@PathVariable long id) {
         return servicioServicio.obtener(id);
     }
 
-    @GetMapping(value = "/buscarPorFecha/{fecha}", consumes = "application/json", produces = "application/json")
-    public List<SolicitudServicio> buscarPorFecha(@PathVariable Date fecha) {
-        return servicioServicio.buscarPorFecha(fecha);
-    }
 
     @GetMapping(value = "/buscarPorUsuario/{usuario}", consumes = "application/json", produces = "application/json")
     public List<SolicitudServicio> buscarPorUsuario(@PathVariable Usuario usuario) {

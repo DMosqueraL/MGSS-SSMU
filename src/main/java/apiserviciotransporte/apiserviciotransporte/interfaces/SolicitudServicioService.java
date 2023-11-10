@@ -5,16 +5,16 @@ import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudAdicional;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudParada;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SolicitudServicioService {
 
-    List<SolicitudServicio> listar();
+    List<SolicitudServicioDto> listar();
 
     SolicitudServicio obtener(Long id);
 
-    List<SolicitudServicio> buscarPorFecha(Date fecha);
+    List<SolicitudServicioDto> buscarPorFecha(LocalDate fecha);
 
     List<SolicitudServicio> buscarPorUsuario(String usuario);
 

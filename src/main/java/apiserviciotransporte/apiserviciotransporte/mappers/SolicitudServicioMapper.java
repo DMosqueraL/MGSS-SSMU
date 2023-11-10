@@ -26,6 +26,7 @@ public class SolicitudServicioMapper {
 
     public SolicitudServicioDto toDto(SolicitudServicio entity) {
         return SolicitudServicioDto.builder()
+                .id(entity.getId())
                 .origen(entity.getOrigen())
                 .destino(entity.getDestino())
                 .cantidadPasajeros(entity.getCantidadPasajeros())

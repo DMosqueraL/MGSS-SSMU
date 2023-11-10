@@ -20,6 +20,8 @@ public class SolicitudServicioDto {
 
 //    private Usuario usuario;
 
+    private Long id;
+
     @NotEmpty(message = "El origen no puede ser vacio")
     private String origen;
 
