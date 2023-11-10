@@ -1,0 +1,41 @@
+version: '3.7'
+
+networks:
+  api_servicio_transporte_network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:16
+    networks:
+      - api_servicio_transporte_network
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: f54S2TvfwcLZaz
+      POSTGRES_USER: postgres
+      POSTGRES_DB: solicitudes_transporte_db
+
+  api_servicio_transporte:
+    image: dorisml/apiserviciotransporte:1.0.3
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - api_servicio_transporte_network
+    environment:
+      - SPRING_APPLICATION_NAME=api-servicio-transporte
+      - SPRING_PROFILES_ACTIVE=pdn
+      - SPRING_DEVTOOLS_LIVERELOAD_ENABLED=false
+      - SERVER_PORT=8080
+      - DATABASE_URL=jdbc:postgresql://postgres_db:5432/solicitudes_transporte_db
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=f54S2TvfwcLZaz
+      - DATABASE_DRIVER=org.postgresql.Driver
+      - JPA_HIBERNATE_DDL_AUTO=update
+      - JPA_SHOW_SQL=true
+      - JPA_HIBERNATE_FORMAT_SQL=true
+      - JPA_DATABASE=POSTGRESQL
+      - JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
