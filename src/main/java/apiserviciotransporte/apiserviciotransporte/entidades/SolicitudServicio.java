@@ -36,11 +36,11 @@ public class SolicitudServicio {
     private int cantidadPasajeros;
 
     @OneToOne
-    @JoinColumn(name = "tipo_vehiculo", referencedColumnName = "id")
+    @JoinColumn(name = "tipo_vehiculo", referencedColumnName = "id" /*, nullable = false, updatable = false*/ )
     private TipoServicio tipo;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "condiciones_servicio", referencedColumnName = "id")
+    @JoinColumn(name = "condiciones_servicio", referencedColumnName = "id"/*, nullable = false, updatable = false*/ )
     private SolicitudAdicional condicionesServicio;
 
     @Column(name = "paradas_intermedias")

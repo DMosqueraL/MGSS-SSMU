@@ -1,5 +1,6 @@
 package apiserviciotransporte.apiserviciotransporte.interfaces;
 
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudAdicional;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudParada;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
@@ -17,7 +18,7 @@ public interface SolicitudServicioService {
 
     List<SolicitudServicio> buscarPorUsuario(String usuario);
 
-    SolicitudServicio guardar(SolicitudServicio solicitud);
+    SolicitudServicio guardarSolicitudServicio(SolicitudServicioDto solicitud);
 
     boolean eliminar(Long id);
 

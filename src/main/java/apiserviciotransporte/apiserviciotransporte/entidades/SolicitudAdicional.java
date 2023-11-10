@@ -3,8 +3,6 @@ package apiserviciotransporte.apiserviciotransporte.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

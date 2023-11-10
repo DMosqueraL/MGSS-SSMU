@@ -1,8 +1,10 @@
 package apiserviciotransporte.apiserviciotransporte.servicios;
 
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudAdicional;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudParada;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
+import apiserviciotransporte.apiserviciotransporte.mappers.SolicitudServicioMapper;
 import apiserviciotransporte.apiserviciotransporte.repositorios.SolicitudServicioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 public class SolicitudServicioService implements apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService {
 
     private final SolicitudServicioRepository repositorio;
+    private final SolicitudServicioMapper mapper;
 
     @Override
     public List<SolicitudServicio> listar() {
@@ -39,8 +42,9 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
     }
 
     @Override
-    public SolicitudServicio guardar(SolicitudServicio solicitudServicio) {
-        return repositorio.save(solicitudServicio);
+    public SolicitudServicio guardarSolicitudServicio(SolicitudServicioDto solicitudServicio) {
+        SolicitudServicio entity = this.mapper.toEntity(solicitudServicio);
+        return repositorio.save(entity);
     }
 
     @Override
@@ -63,7 +67,6 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
         if (solicitudServicioBuscada.isPresent()) {
             var solicitudServicio = solicitudServicioBuscada.get();
 
-            return solicitudServicio.getCondicionesServicio();
         }
         return null;
     }
@@ -76,7 +79,7 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
             var solicitudServicio = solicitudServicioBuscada.get();
 
             // Agregar el adicional a la lista de adicionales de la solicitud
-            solicitudServicio.getCondicionesServicio().add(solicitudAdicionales);
+            // solicitudServicio.getCondicionesServicio().add(solicitudAdicionales);
 
             // Actualizar el autor en la base de datos
             repositorio.save(solicitudServicio);

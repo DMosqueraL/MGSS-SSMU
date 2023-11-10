@@ -1,5 +1,6 @@
 package apiserviciotransporte.apiserviciotransporte.entidades;
 
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,12 +20,8 @@ public class TipoServicio {
     private long id;
 
     @Enumerated(EnumType.STRING)
-    private EnumTipoServicio tipo;
+    private SolicitudServicioDto.EnumTipoServicio tipo;
 
-    @Getter
-    @NoArgsConstructor
-    public enum EnumTipoServicio {
-        LUJO, NORMAL
-    }
+
 
 }

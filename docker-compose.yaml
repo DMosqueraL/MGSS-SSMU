@@ -19,7 +19,9 @@ services:
       POSTGRES_DB: solicitudes_transporte_db
 
   api_servicio_transporte:
-    image: dorisml/apiserviciotransporte:1.0.3
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8080:8080"

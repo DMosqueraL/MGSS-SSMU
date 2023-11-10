@@ -4,7 +4,7 @@ spring:
   application:
     name: api-servicio-transporte
   profiles:
-    active: pdn
+    active: dev
   devtools:
     livereload:
       enabled: false
