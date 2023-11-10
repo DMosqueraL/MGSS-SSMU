@@ -3,9 +3,9 @@ package apiserviciotransporte.apiserviciotransporte.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -26,55 +26,46 @@ public class SolicitudServicio {
     @JoinColumn(name = "idusuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @Column(name = "fecha")
-    private Date fecha;
+    @Column(name = "origen", nullable = false, updatable = false)
+    private String origen;
 
-    @Column(name = "cantidadpasajeros")
+    @Column(name = "destino", nullable = false, updatable = false)
+    private String destino;
+
+    @Column(name = "cantidad_pasajeros")
     private int cantidadPasajeros;
+
+    @OneToOne
+    @JoinColumn(name = "tipo_vehiculo", referencedColumnName = "id")
+    private TipoServicio tipo;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "condiciones_servicio", referencedColumnName = "id")
+    private SolicitudAdicional condicionesServicio;
+
+    @Column(name = "paradas_intermedias")
+    private boolean paradasIntermedias;
 
     @Column(name = "inmediato")
     private boolean inmediato;
 
-    @Column(name = "horaprogramada")
-    private LocalTime horaProgramada;
+    @Column(name = "fecha")
+    private LocalDate fecha;
 
-    @Column(name = "origen")
-    private String direccionOrigen;
-
-    @Column(name = "destino")
-    private String direccionDestino;
-
-    @ManyToOne
-    @JoinColumn(name = "tipo_vehiculo", referencedColumnName = "id")
-    private TipoServicio tipo;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "solicitud_adicionales", referencedColumnName = "id")
-    private List<SolicitudAdicional> adicionales;
-
+    @Column(name = "hora_programada")
+    private LocalDateTime horaProgramada;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "solicitud_paradas", referencedColumnName = "id")
     private List<SolicitudParada> paradas;
 
-    public void addSolicitudAdicional(SolicitudAdicional solicitud){
-        if (adicionales == null){
-            adicionales = new ArrayList<>();
-        }
-        adicionales.add(solicitud);
-    }
     public void addSolicitudParada(SolicitudParada solicitud){
         if (paradas == null){
             paradas = new ArrayList<>();
         }
         paradas.add(solicitud);
     }
-    public void deleteSolicitudAdicional(SolicitudAdicional solicitud){
-        if (adicionales == null){
-            adicionales = new ArrayList<>();
-        }
-        adicionales.remove(solicitud);
-    }
+
     public void deleteSolicitudParada(SolicitudParada solicitud){
         if (paradas == null){
             paradas = new ArrayList<>();

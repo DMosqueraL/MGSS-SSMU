@@ -10,21 +10,23 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @Entity
-@Table(name = "tipo_servicio")
-public class TipoServicio {
+@Table(name = "notificacion_servicio")
+public class NotificacionServicio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_tiposervicio")
     @GenericGenerator(name = "secuencia_tiposervicio", strategy = "increment")
     @Column(name = "id")
     private long id;
 
-    @Enumerated(EnumType.STRING)
-    private EnumTipoServicio tipo;
+    @OneToOne
+    @JoinColumn(name = "usuario_notificacion", referencedColumnName = "id")
+    private Usuario usuarioNotificacion;
 
-    @Getter
-    @NoArgsConstructor
-    public enum EnumTipoServicio {
-        LUJO, NORMAL
-    }
+    @Column(name = "mensaje", nullable = false, updatable = false)
+    private String mensaje;
+
+    @Column(name = "estado")
+    private String estado;
 
 }

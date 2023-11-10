@@ -19,27 +19,12 @@ public class SolicitudAdicional {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    private SolicitudServicio solicitud;
+    @Column(name = "mascotas", updatable = false, nullable = false)
+    private boolean mascotas;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo", referencedColumnName = "id")
-    private TipoAdicional tipo;
+    @Column(name = "paquetes", updatable = false, nullable = false)
+    private boolean paquetes;
 
-
-    @Column(name = "cantidad")
-    private int cantidad;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SolicitudAdicional that = (SolicitudAdicional) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @Column(name = "maletas", updatable = false, nullable = false)
+    private boolean maletas;
 }

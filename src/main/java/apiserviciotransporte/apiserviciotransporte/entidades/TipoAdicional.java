@@ -12,13 +12,19 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "tipo_adicional")
 public class TipoAdicional {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_tipoadicional")
     @GenericGenerator(name = "secuencia_tipoadicional", strategy = "increment")
     @Column(name = "id")
     private long id;
 
-    @Column(name = "tipo", length = 100, unique = true)
-    private String tipo;
+    @Column(name = "estado", length = 100, unique = true)
+    private EnumEstadoNotificacion estado;
 
+    @Getter
+    @NoArgsConstructor
+    public enum EnumEstadoNotificacion {
+        NO_LEAIDA, LEAIDA
+    }
 }

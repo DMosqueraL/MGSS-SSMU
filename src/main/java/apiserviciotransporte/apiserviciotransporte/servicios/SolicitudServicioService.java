@@ -63,7 +63,7 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
         if (solicitudServicioBuscada.isPresent()) {
             var solicitudServicio = solicitudServicioBuscada.get();
 
-            return solicitudServicio.getAdicionales();
+            return solicitudServicio.getCondicionesServicio();
         }
         return null;
     }
@@ -76,7 +76,7 @@ public class SolicitudServicioService implements apiserviciotransporte.apiservic
             var solicitudServicio = solicitudServicioBuscada.get();
 
             // Agregar el adicional a la lista de adicionales de la solicitud
-            solicitudServicio.getAdicionales().add(solicitudAdicionales);
+            solicitudServicio.getCondicionesServicio().add(solicitudAdicionales);
 
             // Actualizar el autor en la base de datos
             repositorio.save(solicitudServicio);
