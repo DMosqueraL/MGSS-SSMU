@@ -1,0 +1,17 @@
+spring:
+  # ----------------------------------------------------------------------------------------------------------------------
+  # DATABASE
+  datasource:
+    url: jdbc:postgresql://localhost:8080/solicitudes_transporte_db
+    username: postgres
+    password: fupavo54
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
