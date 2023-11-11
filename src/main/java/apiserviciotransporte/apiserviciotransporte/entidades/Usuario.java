@@ -4,25 +4,34 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_usuario")
-    @GenericGenerator(name = "secuencia_usuario", strategy = "increment")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", columnDefinition = "VARCHAR(255)")
+    private String id;
 
-    @Column(name = "usuario", length = 100, unique = true)
-    private String usuario;
+    @Column(name = "email", length = 100, unique = true)
+    private String email;
 
-    @Column(name = "nombre", length = 100)
-    private String nombre;
+    @Column(name = "nombre_completo", length = 50)
+    private String nombreCompleto;
+
+    @Column(name = "telefono", length = 30)
+    private String telefono;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private List<SolicitudServicio> solicitudesServicio;
+
 
 }

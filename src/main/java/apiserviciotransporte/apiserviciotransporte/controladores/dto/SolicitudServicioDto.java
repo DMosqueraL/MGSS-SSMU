@@ -1,8 +1,8 @@
 package apiserviciotransporte.apiserviciotransporte.controladores.dto;
 
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudParada;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,9 +18,11 @@ import java.util.List;
 @Setter
 public class SolicitudServicioDto {
 
-//    private Usuario usuario;
-
     private Long id;
+
+    @NotEmpty(message = "El id del usuario no puede ser vacío")
+    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}", message = "El id del usuario no es un uuid")
+    private String usuarioId;
 
     @NotEmpty(message = "El origen no puede ser vacio")
     private String origen;
@@ -36,9 +38,6 @@ public class SolicitudServicioDto {
 
     @NotNull(message = "Las condiciones del servicio no pueden ser vacias")
     private SolicitudAdicional condicionesServicio;
-
-    @NotNull(message = "Las paradas intermedias no pueden ser null")
-    private Boolean paradasIntermedias;
 
     @NotNull(message = "El servicio inmediato no puede ser null")
     private Boolean inmediato;

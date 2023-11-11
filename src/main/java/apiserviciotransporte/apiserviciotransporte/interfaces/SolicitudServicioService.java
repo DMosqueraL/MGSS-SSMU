@@ -12,22 +12,22 @@ public interface SolicitudServicioService {
 
     List<SolicitudServicioDto> listar();
 
-    SolicitudServicio obtener(Long id);
+    SolicitudServicioDto obtener(Long id);
 
     List<SolicitudServicioDto> buscarPorFecha(LocalDate fecha);
 
     List<SolicitudServicio> buscarPorUsuario(String usuario);
 
-    SolicitudServicio guardarSolicitudServicio(SolicitudServicioDto solicitud);
+    SolicitudServicioDto guardarSolicitudServicio(SolicitudServicioDto solicitud);
 
     boolean eliminar(Long id);
 
-    List<SolicitudAdicional> listarAdicionales(Long id);
-
-    void agregarAdicional(Long id, SolicitudAdicional solicitudAdicionales);
-
-    List<SolicitudParada> listarParadas(Long id);
-
-    void agregarParada(Long id, SolicitudParada solicitudParada);
+//    List<SolicitudAdicional> listarAdicionales(Long id);
+//
+//    void agregarAdicional(Long id, SolicitudAdicional solicitudAdicionales);
+//
+//    List<SolicitudParada> listarParadas(Long id);
+//
+//    void agregarParada(Long id, SolicitudParada solicitudParada);
 
 }

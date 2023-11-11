@@ -20,6 +20,7 @@ public class TipoServicio {
     private long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
     private SolicitudServicioDto.EnumTipoServicio tipo;
 
 
