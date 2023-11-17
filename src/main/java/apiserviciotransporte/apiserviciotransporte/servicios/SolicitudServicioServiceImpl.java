@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     }
 
     @Override
-    public List<SolicitudServicioDto> buscarPorFecha(LocalDate fecha) {
+    public List<SolicitudServicioDto> buscarPorFecha(LocalDateTime fecha) {
         return solicitudServicioRepository.findByFecha(fecha)
                 .stream()
                 .map(mapper::toDto)
@@ -77,8 +78,10 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     @Override
     public boolean eliminar(Long id) {
         try {
-            solicitudServicioRepository.deleteById(id);
-            return true;
+            return this.solicitudServicioRepository.findById(id).map(solicitudServicio -> {
+                solicitudServicioRepository.delete(solicitudServicio);
+                return Boolean.TRUE;
+            }).orElse(Boolean.FALSE);
         } catch (Exception ex) {
             return false;
         }

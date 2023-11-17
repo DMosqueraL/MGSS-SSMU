@@ -39,14 +39,14 @@ public class SolicitudServicioDto {
     @NotNull(message = "Las condiciones del servicio no pueden ser vacias")
     private SolicitudAdicional condicionesServicio;
 
-    @NotNull(message = "El servicio inmediato no puede ser null")
-    private Boolean inmediato;
+//    @NotNull(message = "El servicio inmediato no puede ser null")
+//    private Boolean inmediato;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDateTime horaProgramada;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+//    private LocalDateTime horaProgramada;
 
     @NotNull(message = "Las paradas no pueden ser null")
     private List<String> paradas;
@@ -69,7 +69,6 @@ public class SolicitudServicioDto {
     @Setter
     public static class SolicitudAdicional {
         private boolean mascotas;
-        private boolean paquetes;
         private boolean maletas;
     }
 }

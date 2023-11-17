@@ -1,5 +1,6 @@
 package apiserviciotransporte.apiserviciotransporte.controladores;
 
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudDeleteResponseDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService;
@@ -14,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,7 +57,7 @@ public class SolicitudServicioController {
 
 
     @GetMapping(value = "/date/{fecha}", produces = "application/json")
-    public ResponseEntity<List<SolicitudServicioDto>> buscarPorFecha(@PathVariable("fecha") LocalDate fecha) {
+    public ResponseEntity<List<SolicitudServicioDto>> buscarPorFecha(@PathVariable("fecha") LocalDateTime fecha) {
         List<SolicitudServicioDto> solicitudes = solicitudServicio.buscarPorFecha(fecha);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -69,12 +71,15 @@ public class SolicitudServicioController {
 //        return servicioServicio.buscarPorUsuario(usuario.getUsuario());
 //    }
 
-    @DeleteMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Boolean> eliminar(@PathVariable long id) {
+    @DeleteMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<SolicitudDeleteResponseDto> eliminar(@PathVariable("id") long id) {
         boolean eliminado = solicitudServicio.eliminar(id);
+        SolicitudDeleteResponseDto solicitudDeleteResponseDto = SolicitudDeleteResponseDto.builder()
+                .deleted(eliminado)
+                .build();
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(eliminado);
+                .body(solicitudDeleteResponseDto);
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")

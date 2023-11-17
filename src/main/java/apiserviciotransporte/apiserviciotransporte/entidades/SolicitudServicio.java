@@ -51,14 +51,14 @@ public class SolicitudServicio {
     @Column(name = "paradas_intermedias")
     private boolean paradasIntermedias;
 
-    @Column(name = "inmediato")
-    private boolean inmediato;
+//    @Column(name = "inmediato")
+//    private boolean inmediato;
 
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
-    @Column(name = "hora_programada")
-    private LocalDateTime horaProgramada;
+//    @Column(name = "hora_programada")
+//    private LocalDateTime horaProgramada;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "solicitud_servicio", referencedColumnName = "id")

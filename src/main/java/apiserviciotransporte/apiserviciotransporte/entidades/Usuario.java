@@ -30,7 +30,7 @@ public class Usuario {
     private String telefono;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private List<SolicitudServicio> solicitudesServicio;
 
 

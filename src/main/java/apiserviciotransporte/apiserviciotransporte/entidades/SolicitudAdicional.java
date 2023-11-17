@@ -19,9 +19,9 @@ public class SolicitudAdicional {
 
     @Column(name = "mascotas", updatable = false, nullable = false)
     private boolean mascotas;
-
-    @Column(name = "paquetes", updatable = false, nullable = false)
-    private boolean paquetes;
+//
+//    @Column(name = "paquetes", updatable = false, nullable = false)
+//    private boolean paquetes;
 
     @Column(name = "maletas", updatable = false, nullable = false)
     private boolean maletas;
