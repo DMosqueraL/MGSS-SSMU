@@ -13,3 +13,10 @@ spring:
         format_sql: true
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
