@@ -23,11 +23,11 @@ export default function Usuario() {
                   imgSource='/images/solicitudesServicio/box.png'
                   url='/servicios/usuario/enviarRecogerPaquete'
                 />
-                <ServiceCard
+                {/* <ServiceCard
                   title='Reservado'
                   imgSource='/images/solicitudesServicio/calendar.png'
                   url='/servicios/usuario/alquilerPorHoras'
-                />
+                /> */}
               </div>
             </div>
           </div>

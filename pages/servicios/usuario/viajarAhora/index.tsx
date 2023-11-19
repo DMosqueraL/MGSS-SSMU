@@ -21,7 +21,7 @@ export interface ListaSolicitudesServicioResponse {
 
 const ViajarAhoraPage = () => {
   const [userId] = useState<string>('e9c596b2-780b-4aea-845f-855d2678a8cd');
-
+  const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiceTab] = useState<number>(0);
   let [apiService] = useState(new ApiService());
   const [paginacion, setPaginacion] = useState({
@@ -43,22 +43,30 @@ const ViajarAhoraPage = () => {
   const { paginationInfo } = solicitudesServicio;
 
   useEffect(() => {
-    const type = activeTab === 0 ? 'INMEDIATA' : 'RESERVADA';
-    apiService
-      .get<ListaSolicitudesServicioResponse>('/solicitudes-servicios', {
-        ...paginacion,
-        type,
-      })
-      .then((data) => {
-        setSolicitudesServicio(data);
-      })
-      .catch((err) => {
-        return Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'No se pudo obtener las solicitudes',
+    setLoading(true);
+    new Promise((resolve) => {
+      setTimeout(() => resolve(''), 1000);
+    }).then(() => {
+      const type = activeTab === 0 ? 'INMEDIATA' : 'RESERVADA';
+      apiService
+        .get<ListaSolicitudesServicioResponse>('/solicitudes-servicios', {
+          ...paginacion,
+          type,
+        })
+        .then((data) => {
+          setSolicitudesServicio(data);
+        })
+        .catch((err) => {
+          return Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No se pudo obtener las solicitudes',
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      });
+    });
   }, [paginacion, activeTab]);
 
   const traerSiguientePagina = () => {
@@ -77,33 +85,46 @@ const ViajarAhoraPage = () => {
 
   return (
     <Fragment>
-      <div className='h-screen overflow-y-hidden flex flex-row justify-evenly flex-wrap'>
-        <div style={{ minWidth: '500px' }}>
-          <CrearSolicitud
-            setSolicitudesServicio={setSolicitudesServicio}
-            activeTab={activeTab}
-          />
-        </div>
-
-        <div
-          className='ml-5 overflow-y-auto h-screen w-max flex-grow'
-          style={{ minWidth: '500px' }}
-        >
-          <SolicitudesList
-            solicitudesServicio={solicitudesServicio}
-            setSolicitudesServicio={setSolicitudesServicio}
-            activeTab={activeTab}
-            setActiceTab={setActiceTab}
-          />
-          {paginationInfo.totalElements > 0 && (
-            <SolicitudesPaginacion
-              paginationInfo={paginationInfo}
-              traerSiguientePagina={traerSiguientePagina}
-              traerAnteriorPagina={traerAnteriorPagina}
+      {loading ? (
+        <div className='w-screen h-screen flex justify-center items-center bg-transparent'>
+          <div>
+            <p className='text-center'>Cargando...</p>
+            <img
+              src='/images/common/loading.svg'
+              alt='loading'
+              className='bg-white'
             />
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className='h-screen overflow-y-hidden flex flex-row justify-evenly flex-wrap'>
+          <div style={{ minWidth: '500px' }}>
+            <CrearSolicitud
+              setSolicitudesServicio={setSolicitudesServicio}
+              activeTab={activeTab}
+            />
+          </div>
+
+          <div
+            className='ml-5 overflow-y-auto h-screen w-max flex-grow'
+            style={{ minWidth: '500px' }}
+          >
+            <SolicitudesList
+              solicitudesServicio={solicitudesServicio}
+              setSolicitudesServicio={setSolicitudesServicio}
+              activeTab={activeTab}
+              setActiceTab={setActiceTab}
+            />
+            {paginationInfo.totalElements > 0 && (
+              <SolicitudesPaginacion
+                paginationInfo={paginationInfo}
+                traerSiguientePagina={traerSiguientePagina}
+                traerAnteriorPagina={traerAnteriorPagina}
+              />
+            )}
+          </div>
+        </div>
+      )}
     </Fragment>
   );
 };
