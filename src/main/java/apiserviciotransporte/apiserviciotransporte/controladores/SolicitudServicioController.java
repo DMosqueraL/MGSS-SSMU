@@ -43,9 +43,10 @@ public class SolicitudServicioController {
     @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<SolicitudesServicioResponseDto> listarSolicitudesDeServicio(
             @RequestParam("page") int page,
-            @RequestParam("size") int size
-    ) {
-        SolicitudesServicioResponseDto responseDto = this.solicitudServicio.listar(page, size);
+            @RequestParam("size") int size,
+            @RequestParam("type") SolicitudServicioDto.TipoSolicitud type
+            ) {
+        SolicitudesServicioResponseDto responseDto = this.solicitudServicio.listar(page, size, type);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responseDto);

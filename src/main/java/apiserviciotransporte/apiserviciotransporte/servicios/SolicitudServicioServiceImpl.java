@@ -10,16 +10,13 @@ import apiserviciotransporte.apiserviciotransporte.repositorios.SolicitudServici
 import apiserviciotransporte.apiserviciotransporte.repositorios.TipoServicioRepository;
 import apiserviciotransporte.apiserviciotransporte.repositorios.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +28,10 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     private final SolicitudServicioMapper mapper;
 
     @Override
-    public SolicitudesServicioResponseDto listar(int page, int size) {
+    public SolicitudesServicioResponseDto listar(int page, int size, SolicitudServicioDto.TipoSolicitud type) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<SolicitudServicio> solicitudesPage = this.solicitudServicioRepository.findAllByActiva(true, pageRequest);
+        boolean inmediato = type == SolicitudServicioDto.TipoSolicitud.INMEDIATA;
+        Page<SolicitudServicio> solicitudesPage = this.solicitudServicioRepository.findAllByActivaAndInmediato(true, inmediato, pageRequest);
         List<SolicitudServicioDto> solicitudesServicio = solicitudesPage.getContent().stream().map(this.mapper::toDto).toList();
 
         return SolicitudesServicioResponseDto.builder()

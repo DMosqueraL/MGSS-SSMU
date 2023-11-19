@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,8 +40,8 @@ public class SolicitudServicioDto {
     @NotNull(message = "Las condiciones del servicio no pueden ser vacias")
     private SolicitudAdicional condicionesServicio;
 
-//    @NotNull(message = "El servicio inmediato no puede ser null")
-//    private Boolean inmediato;
+    @NotNull(message = "El servicio inmediato no puede ser null")
+    private Boolean inmediato;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime fecha;
@@ -73,4 +72,16 @@ public class SolicitudServicioDto {
         private boolean mascotas;
         private boolean maletas;
     }
+
+    @AllArgsConstructor
+    @Getter
+    public enum TipoSolicitud {
+        INMEDIATA("INMEDIATA"),
+        RESERVADA("RESERVADA");
+
+        private String tipo;
+
+    }
+
+
 }

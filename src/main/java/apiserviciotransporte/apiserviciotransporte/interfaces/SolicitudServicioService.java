@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SolicitudServicioService {
 
-    SolicitudesServicioResponseDto listar(int page, int size);
+    SolicitudesServicioResponseDto listar(int page, int size, SolicitudServicioDto.TipoSolicitud type);
 
     SolicitudServicioDto obtener(Long id);
 

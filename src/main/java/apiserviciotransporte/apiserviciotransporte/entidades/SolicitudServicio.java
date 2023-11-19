@@ -51,8 +51,8 @@ public class SolicitudServicio {
     @Column(name = "paradas_intermedias")
     private boolean paradasIntermedias;
 
-//    @Column(name = "inmediato")
-//    private boolean inmediato;
+    @Column(name = "inmediato")
+    private boolean inmediato;
 
     @Column(name = "fecha")
     private LocalDateTime fecha;
