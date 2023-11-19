@@ -29,7 +29,7 @@ const Home = () => {
                       url='/servicios/usuario/enviarRecogerPaquete'
                     />
                     <ServiceCard
-                      title='Por horas'
+                      title='Reservado'
                       imgSource='/images/solicitudesServicio/calendar.png'
                       url='/servicios/usuario/alquilerPorHoras'
                     />

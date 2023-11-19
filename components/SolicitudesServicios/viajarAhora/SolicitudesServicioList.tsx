@@ -2,14 +2,17 @@ import { ApiService } from '@/services/api.service';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { SolicitudServicioInfo } from './CrearSolicitudServicio';
+import { ListaSolicitudesServicioResponse } from '@/pages/servicios/usuario/viajarAhora';
 
 interface SolicitudesServicioListProps {
-  solicitudesServicio: SolicitudServicioInfo[];
-  setSolicitudesServicio: Dispatch<SetStateAction<SolicitudServicioInfo[]>>;
+  solicitudesServicio: ListaSolicitudesServicioResponse;
+  setSolicitudesServicio: Dispatch<
+    SetStateAction<ListaSolicitudesServicioResponse>
+  >;
 }
 
 const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
-  const { setSolicitudesServicio, solicitudesServicio } = props;
+  const { solicitudesServicio, setSolicitudesServicio } = props;
 
   const [apiService] = useState<ApiService>(new ApiService());
 
@@ -32,11 +35,15 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
           text: 'La solicitud se eliminó correctamente',
         });
 
-        const solicitudesFiltradas = solicitudesServicio.filter(
+        const { elements } = solicitudesServicio;
+        const solicitudesFiltradas = elements.filter(
           (solicitud) => solicitud.id !== id
         );
 
-        setSolicitudesServicio(solicitudesFiltradas);
+        setSolicitudesServicio((solicitudes) => ({
+          ...solicitudes,
+          elements: solicitudesFiltradas,
+        }));
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +65,7 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
             </h1>
             <div className='container'>
               <div className='row'>
-                {solicitudesServicio.map((solicitud) => (
+                {solicitudesServicio.elements.map((solicitud) => (
                   <div key={solicitud.id} className='col-lg-12 col-sm-12'>
                     <ul className='mb-5'>
                       <li>
@@ -114,6 +121,13 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
                   </div>
                 ))}
               </div>
+              {solicitudesServicio.paginationInfo.totalElements === 0 && (
+                <div className='flex justify-center w-full bg-red-500'>
+                  <p className='text-2xl font-semibold text-center text-gray-500 mt-4 mb-6'>
+                    No hay solicitudes
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

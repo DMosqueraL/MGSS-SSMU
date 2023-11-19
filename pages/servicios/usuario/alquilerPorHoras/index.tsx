@@ -69,11 +69,11 @@ export default function alquilerPorHoras() {
                     Hora de partida
                   </label>
                   <input
-                    type='time'
-                    id='time'
+                    type='datetime-local'
+                    id='datetime'
                     className='w-full bg-transparent ring-2 ring-gray-300 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500'
                     required
-                    {...register('time', { required: true })}
+                    {...register('datetime-local', { required: true })}
                   />
                   {errors.time?.type === 'required' && (
                     <p className='text-red-500'>
