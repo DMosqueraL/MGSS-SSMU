@@ -21,12 +21,4 @@ public interface SolicitudServicioService {
 
     boolean eliminar(Long id);
 
-//    List<SolicitudAdicional> listarAdicionales(Long id);
-//
-//    void agregarAdicional(Long id, SolicitudAdicional solicitudAdicionales);
-//
-//    List<SolicitudParada> listarParadas(Long id);
-//
-//    void agregarParada(Long id, SolicitudParada solicitudParada);
-
 }

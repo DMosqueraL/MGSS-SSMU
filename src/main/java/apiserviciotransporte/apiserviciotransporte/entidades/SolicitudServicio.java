@@ -60,26 +60,7 @@ public class SolicitudServicio {
     @Column(name = "activa")
     private boolean activa;
 
-//    @Column(name = "hora_programada")
-//    private LocalDateTime horaProgramada;
-
-
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "solicitud_servicio", referencedColumnName = "id")
     private List<SolicitudParada> paradas;
-
-    public void addSolicitudParada(SolicitudParada solicitud) {
-        if (paradas == null) {
-            paradas = new ArrayList<>();
-        }
-        paradas.add(solicitud);
-    }
-
-    public void deleteSolicitudParada(SolicitudParada solicitud) {
-        if (paradas == null) {
-            paradas = new ArrayList<>();
-        }
-        paradas.remove(solicitud);
-    }
 }

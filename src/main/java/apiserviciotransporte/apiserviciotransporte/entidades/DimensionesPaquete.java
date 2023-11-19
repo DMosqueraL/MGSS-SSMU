@@ -11,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @Entity
-@Table(name = "dimensiones")
+@Table(name = "dimensiones_paquete")
 public class DimensionesPaquete {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,9 @@ public class DimensionesPaquete {
     @Min(value = 0, message = "Valor mínimo permitido es 0")
     @Column(name = "alto", nullable = false, updatable = false)
     private int alto;
+
+    @Min(value = 0, message = "Valor mínimo permitido es 0")
+    @Column(name = "peso", nullable = false, updatable = false)
+    private int peso;
 
 }
