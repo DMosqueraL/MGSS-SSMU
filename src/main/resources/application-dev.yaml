@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/solicitudes_transporte_db
     username: postgres
-    password: f54S2TvfwcLZaz
+    password: 12345
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -13,3 +13,10 @@ spring:
         format_sql: true
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
