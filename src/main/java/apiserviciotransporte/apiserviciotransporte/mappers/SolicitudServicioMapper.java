@@ -20,7 +20,7 @@ public class SolicitudServicioMapper {
                 .destino(dto.getDestino())
                 .cantidadPasajeros(dto.getCantidadPasajeros())
                 .tipo(tipoServicio)
-                .inmediato(dto.getInmediato())
+                .inmediato(dto.isInmediato())
                 .condicionesServicio(SolicitudAdicional.builder()
                         .maletas(dto.getCondicionesServicio().isMaletas())
                         .mascotas(dto.getCondicionesServicio().isMascotas())

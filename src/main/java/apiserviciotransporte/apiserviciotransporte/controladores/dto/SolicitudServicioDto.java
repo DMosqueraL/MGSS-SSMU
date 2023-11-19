@@ -41,7 +41,7 @@ public class SolicitudServicioDto {
     private SolicitudAdicional condicionesServicio;
 
     @NotNull(message = "El servicio inmediato no puede ser null")
-    private Boolean inmediato;
+    private boolean inmediato;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime fecha;
