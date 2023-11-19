@@ -1,4 +1,4 @@
-import Header from '@/components/SolicitudesServicios/shared/Header';
+import Header from '@/components/shared/Header';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { ApiService } from '@/services/api.service';

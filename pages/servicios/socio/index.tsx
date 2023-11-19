@@ -1,4 +1,4 @@
-import Header from '@/components/SolicitudesServicios/shared/Header';
+import Header from '@/components/shared/Header';
 import Swal from 'sweetalert2';
 
 export default function Socio() {

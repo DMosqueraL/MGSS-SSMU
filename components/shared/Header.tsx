@@ -1,4 +1,4 @@
-export default function Header() {
+const Header = () => {
   return (
     <header className='max-w-md w-full text-dark-700 bg-blue-600 border-t border-gray-100 shadow-sm body-font absolute top-0'>
       <div className='container flex items-center p-5 py-3 mx-auto md:flex-row justify-between'>
@@ -28,7 +28,7 @@ export default function Header() {
             </div>
             <a
               href='#_'
-              className='mx-0 my-auto font-medium text-xl hover:text-gray-900'
+              className='mx-0 my-auto font-medium text-white text-xl hover:text-gray-900'
             >
               Usuario
             </a>
@@ -37,11 +37,13 @@ export default function Header() {
 
         <a
           href='/servicios/usuario'
-          className='flex items-center my-auto mx-3 font-medium text-gray-900 text-2xl lg:w-1/5 title-font lg:items-center lg:justify-center'
+          className='flex items-center text-white my-auto mx-3 font-medium  text-2xl lg:w-1/5 title-font lg:items-center lg:justify-center'
         >
           SSMU
         </a>
       </div>
     </header>
   );
-}
+};
+
+export default Header;

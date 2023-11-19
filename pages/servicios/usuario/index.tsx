@@ -1,5 +1,5 @@
-import Header from '@/components/SolicitudesServicios/shared/Header';
-import ServiceCard from '@/components/SolicitudesServicios/ServiceCard';
+import Header from '@/components/shared/Header';
+import ServiceCard from '@/components/ServiceCard';
 
 export default function Usuario() {
   return (

@@ -1,5 +1,5 @@
-import Header from '@/components/SolicitudesServicios/shared/Header';
-import Searching from '@/components/SolicitudesServicios/Searching';
+import Header from '@/components/shared/Header';
+import Searching from '@/components/Searching';
 import { useEffect } from 'react';
 
 export default function alquilerPorHoras() {

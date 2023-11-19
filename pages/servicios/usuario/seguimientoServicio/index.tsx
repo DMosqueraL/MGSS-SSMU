@@ -1,4 +1,4 @@
-import Header from '@/components/SolicitudesServicios/shared/Header';
+import Header from '@/components/shared/Header';
 import Map from '@/components/SolicitudesServicios/Map';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';

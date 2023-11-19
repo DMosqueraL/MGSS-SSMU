@@ -1,6 +1,6 @@
 import { ExampleComponent } from '@/components/ExampleComponent';
-import ServiceCard from '@/components/SolicitudesServicios/ServiceCard';
-import Header from '@/components/SolicitudesServicios/shared/Header';
+import ServiceCard from '@/components/ServiceCard';
+import Header from '@/components/shared/Header';
 
 const Home = () => {
   return (
@@ -31,7 +31,7 @@ const Home = () => {
                     <ServiceCard
                       title='Reservado'
                       imgSource='/images/solicitudesServicio/calendar.png'
-                      url='/servicios/usuario/alquilerPorHoras'
+                      url='/servicios/usuario/reservarServicio'
                     />
                   </div>
                 </div>

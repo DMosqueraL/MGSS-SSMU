@@ -1,18 +1,17 @@
-import { ApiService } from '@/services/api.service';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
-import { SolicitudServicioInfo } from './CrearSolicitudServicio';
 import { ListaSolicitudesServicioResponse } from '@/pages/servicios/usuario/viajarAhora';
+import { ApiService } from '@/services/api.service';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import Swal from 'sweetalert2';
 
-interface SolicitudesServicioListProps {
-  solicitudesServicio: ListaSolicitudesServicioResponse;
-  setSolicitudesServicio: Dispatch<
+interface SolicitudesInmediatasListProps {
+  solicitudesInmediatas: ListaSolicitudesServicioResponse;
+  setSolicitudesInmediatas: Dispatch<
     SetStateAction<ListaSolicitudesServicioResponse>
   >;
 }
 
-const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
-  const { solicitudesServicio, setSolicitudesServicio } = props;
+const SolicitudesInmediatasList = (props: SolicitudesInmediatasListProps) => {
+  const { solicitudesInmediatas, setSolicitudesInmediatas } = props;
 
   const [apiService] = useState<ApiService>(new ApiService());
 
@@ -35,12 +34,12 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
           text: 'La solicitud se eliminó correctamente',
         });
 
-        const { elements } = solicitudesServicio;
+        const { elements } = solicitudesInmediatas;
         const solicitudesFiltradas = elements.filter(
           (solicitud) => solicitud.id !== id
         );
 
-        setSolicitudesServicio((solicitudes) => ({
+        setSolicitudesInmediatas((solicitudes) => ({
           ...solicitudes,
           elements: solicitudesFiltradas,
         }));
@@ -61,11 +60,11 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
         <div className='w-full bg-white rounded-lg shadow-lg'>
           <div className='px-6 m-0 p-0'>
             <h1 className='text-2xl font-semibold text-center text-gray-500 mt-4 mb-6'>
-              Lista de solicitudes
+              Lista de Solicitudes Inmediatas
             </h1>
             <div className='container'>
               <div className='row'>
-                {solicitudesServicio.elements.map((solicitud) => (
+                {solicitudesInmediatas.elements.map((solicitud) => (
                   <div key={solicitud.id} className='col-lg-12 col-sm-12'>
                     <ul className='mb-5'>
                       <li>
@@ -121,7 +120,7 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
                   </div>
                 ))}
               </div>
-              {solicitudesServicio.paginationInfo.totalElements === 0 && (
+              {solicitudesInmediatas.paginationInfo.totalElements === 0 && (
                 <div className='flex justify-center w-full bg-red-500'>
                   <p className='text-2xl font-semibold text-center text-gray-500 mt-4 mb-6'>
                     No hay solicitudes
@@ -136,4 +135,4 @@ const SolicitudesServicioList = (props: SolicitudesServicioListProps) => {
   );
 };
 
-export default SolicitudesServicioList;
+export default SolicitudesInmediatasList;
