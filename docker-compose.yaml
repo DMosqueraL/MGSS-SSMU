@@ -1,0 +1,63 @@
+version: '3.7'
+
+networks:
+  api_servicio_transporte_network:
+    driver: bridge
+
+volumes:
+  sonarqube_data:
+
+services:
+  postgres:
+    image: postgres:16
+    networks:
+      - api_servicio_transporte_network
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: f54S2TvfwcLZaz
+      POSTGRES_USER: postgres
+      POSTGRES_DB: solicitudes_transporte_db
+
+  api_servicio_transporte:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - api_servicio_transporte_network
+    environment:
+      - SPRING_APPLICATION_NAME=api-servicio-transporte
+      - SPRING_PROFILES_ACTIVE=pdn
+      - SPRING_DEVTOOLS_LIVERELOAD_ENABLED=false
+      - SERVER_PORT=8080
+      - DATABASE_URL=jdbc:postgresql://postgres_db:5432/solicitudes_transporte_db
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=f54S2TvfwcLZaz
+#      - DATABASE_URL=jdbc:postgresql://solicitudes_transporte_db_user:PCMlWObxPUWubrtFE3n30PmH4Xidw6HA@dpg-clchopbmot1c73dggskg-a/solicitudes_transporte_db
+#      - DATABASE_USERNAME=solicitudes_transporte_db_user
+#      - DATABASE_PASSWORD=PCMlWObxPUWubrtFE3n30PmH4Xidw6HA
+      - DATABASE_DRIVER=org.postgresql.Driver
+      - JPA_HIBERNATE_DDL_AUTO=update
+      - JPA_SHOW_SQL=true
+      - JPA_HIBERNATE_FORMAT_SQL=true
+      - JPA_DATABASE=POSTGRESQL
+      - JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+
+#  sonarqube:
+#    image: sonarqube:latest
+#    container_name: sonarqube
+#    ports:
+#      - "9000:9000"
+#      - "9092:9092"
+#    networks:
+#      - api_servicio_transporte_network
+#    environment:
+#      - SONARQUBE_HOME=/opt/sonarqube
+#      - SONARQUBE_DATA=/var/sonarqube/data
+#    volumes:
+#      - ./sonarqube_data:/var/sonarqube/data
