@@ -1,17 +1,15 @@
 package apiserviciotransporte.apiserviciotransporte.interfaces;
 
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudAdicional;
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudParada;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SolicitudServicioService {
 
-    List<SolicitudServicioDto> listar();
+    SolicitudesServicioResponseDto listar(int page, int size);
 
     SolicitudServicioDto obtener(Long id);
 

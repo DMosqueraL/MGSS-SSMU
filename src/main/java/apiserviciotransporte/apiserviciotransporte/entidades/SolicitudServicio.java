@@ -57,8 +57,13 @@ public class SolicitudServicio {
     @Column(name = "fecha")
     private LocalDateTime fecha;
 
+    @Column(name = "activa")
+    private boolean activa;
+
 //    @Column(name = "hora_programada")
 //    private LocalDateTime horaProgramada;
+
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "solicitud_servicio", referencedColumnName = "id")

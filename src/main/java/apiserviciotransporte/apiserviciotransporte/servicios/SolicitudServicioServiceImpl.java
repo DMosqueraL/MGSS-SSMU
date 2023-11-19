@@ -1,6 +1,7 @@
 package apiserviciotransporte.apiserviciotransporte.servicios;
 
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.*;
 import apiserviciotransporte.apiserviciotransporte.excepciones.NotFoundException;
 import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService;
@@ -8,14 +9,17 @@ import apiserviciotransporte.apiserviciotransporte.mappers.SolicitudServicioMapp
 import apiserviciotransporte.apiserviciotransporte.repositorios.SolicitudServicioRepository;
 import apiserviciotransporte.apiserviciotransporte.repositorios.TipoServicioRepository;
 import apiserviciotransporte.apiserviciotransporte.repositorios.UsuarioRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +31,21 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     private final SolicitudServicioMapper mapper;
 
     @Override
-    public List<SolicitudServicioDto> listar() {
-        return solicitudServicioRepository.findAll()
-                .stream()
-                .map(mapper::toDto)
-                .toList();
+    public SolicitudesServicioResponseDto listar(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<SolicitudServicio> solicitudesPage = this.solicitudServicioRepository.findAllByActiva(true, pageRequest);
+        List<SolicitudServicioDto> solicitudesServicio = solicitudesPage.getContent().stream().map(this.mapper::toDto).toList();
+
+        return SolicitudesServicioResponseDto.builder()
+                .paginationInfo(SolicitudesServicioResponseDto.PaginationInfo.builder()
+                        .currentPage(solicitudesPage.getNumber())
+                        .currentElements(solicitudesPage.getNumberOfElements())
+                        .totalElements(solicitudesPage.getTotalElements())
+                        .totalPages(solicitudesPage.getTotalPages())
+                        .build())
+                .elements(solicitudesServicio)
+                .build();
+
     }
 
     @Override
@@ -59,11 +73,11 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     @Override
     public SolicitudServicioDto guardarSolicitudServicio(SolicitudServicioDto solicitudServicioDto) {
         Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(solicitudServicioDto.getUsuarioId());
-        if(usuarioOptional.isEmpty()) {
+        if (usuarioOptional.isEmpty()) {
             throw new NotFoundException("No se encontró el usuario con id: " + solicitudServicioDto.getUsuarioId());
         }
         Optional<TipoServicio> tipoServicioOptional = this.tipoServicioRepository.findByTipo(solicitudServicioDto.getTipo());
-        if(tipoServicioOptional.isEmpty()) {
+        if (tipoServicioOptional.isEmpty()) {
             throw new NotFoundException("No se encontró el tipo de servicio: " + solicitudServicioDto.getTipo());
         }
         Usuario usuario = usuarioOptional.get();
@@ -71,6 +85,7 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
 
         SolicitudServicio entity = this.mapper.toEntity(solicitudServicioDto, tipoServicio);
         entity.setUsuario(usuario);
+        entity.setActiva(true);
         SolicitudServicio solicitudGuardada = solicitudServicioRepository.save(entity);
         return this.mapper.toDto(solicitudGuardada);
     }
@@ -79,7 +94,8 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     public boolean eliminar(Long id) {
         try {
             return this.solicitudServicioRepository.findById(id).map(solicitudServicio -> {
-                solicitudServicioRepository.delete(solicitudServicio);
+                solicitudServicio.setActiva(false);
+                solicitudServicioRepository.save(solicitudServicio);
                 return Boolean.TRUE;
             }).orElse(Boolean.FALSE);
         } catch (Exception ex) {

@@ -38,6 +38,7 @@ public class SolicitudServicioMapper {
                 .id(entity.getId())
                 .origen(entity.getOrigen())
                 .destino(entity.getDestino())
+                .activa(entity.isActiva())
                 .usuarioId(entity.getUsuario().getId())
                 .cantidadPasajeros(entity.getCantidadPasajeros())
                 .tipo(null)

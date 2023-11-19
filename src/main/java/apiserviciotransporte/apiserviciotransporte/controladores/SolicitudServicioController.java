@@ -2,6 +2,7 @@ package apiserviciotransporte.apiserviciotransporte.controladores;
 
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudDeleteResponseDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService;
 import jakarta.validation.Valid;
@@ -40,11 +41,14 @@ public class SolicitudServicioController {
     }
 
     @GetMapping(value = "", produces = "application/json")
-    public ResponseEntity<List<SolicitudServicioDto>> listarSolicitudesDeServicio() {
-        List<SolicitudServicioDto> solicitudes = this.solicitudServicio.listar();
+    public ResponseEntity<SolicitudesServicioResponseDto> listarSolicitudesDeServicio(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size
+    ) {
+        SolicitudesServicioResponseDto responseDto = this.solicitudServicio.listar(page, size);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(solicitudes);
+                .body(responseDto);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
@@ -78,7 +82,7 @@ public class SolicitudServicioController {
                 .deleted(eliminado)
                 .build();
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.OK)
                 .body(solicitudDeleteResponseDto);
     }
 
