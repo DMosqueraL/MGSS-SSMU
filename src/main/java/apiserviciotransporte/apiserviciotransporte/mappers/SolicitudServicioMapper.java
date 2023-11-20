@@ -40,7 +40,6 @@ public class SolicitudServicioMapper {
                 .origen(entity.getOrigen())
                 .destino(entity.getDestino())
                 .activa(entity.isActiva())
-                .usuarioId(entity.getUsuario().getId())
                 .cantidadPasajeros(entity.getCantidadPasajeros())
                 .tipo(entity.getTipo().getTipo())
                 .condicionesServicio(SolicitudServicioDto.SolicitudAdicional.builder()

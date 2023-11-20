@@ -12,6 +12,8 @@ import apiserviciotransporte.apiserviciotransporte.repositorios.UsuarioRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +31,8 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
 
     @Override
     public SolicitudesServicioResponseDto listar(int page, int size, SolicitudServicioDto.TipoSolicitud type) {
+        DetalleUsuario user = getPrincipal();
+
         PageRequest pageRequest = PageRequest.of(page, size);
         boolean inmediato = type == SolicitudServicioDto.TipoSolicitud.INMEDIATA;
         Page<SolicitudServicio> solicitudesPage = this.solicitudServicioRepository.findAllByActivaAndInmediato(true, inmediato, pageRequest);
@@ -47,6 +51,32 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     }
 
     @Override
+    public SolicitudesServicioResponseDto listarPorUsuario(int page, int size, SolicitudServicioDto.TipoSolicitud type) {
+        DetalleUsuario user = getPrincipal();
+
+        Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(user.getId());
+        return usuarioOptional.map(usuario -> {
+                    PageRequest pageRequest = PageRequest.of(page, size);
+                    boolean inmediato = type == SolicitudServicioDto.TipoSolicitud.INMEDIATA;
+                    Page<SolicitudServicio> solicitudesPage = this.solicitudServicioRepository.findAllByUsuarioAndActivaAndInmediato(usuario, true, inmediato, pageRequest);
+                    List<SolicitudServicioDto> solicitudesServicio = solicitudesPage.getContent().stream().map(this.mapper::toDto).toList();
+
+                    return SolicitudesServicioResponseDto.builder()
+                            .paginationInfo(SolicitudesServicioResponseDto.PaginationInfo.builder()
+                                    .currentPage(solicitudesPage.getNumber())
+                                    .currentElements(solicitudesPage.getNumberOfElements())
+                                    .totalElements(solicitudesPage.getTotalElements())
+                                    .totalPages(solicitudesPage.getTotalPages())
+                                    .build())
+                            .elements(solicitudesServicio)
+                            .build();
+                })
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+
+
+    }
+
+    @Override
     public SolicitudServicioDto obtener(Long id) {
         Optional<SolicitudServicio> servicioOptional = solicitudServicioRepository.findById(id);
         return servicioOptional.map(mapper::toDto)
@@ -61,18 +91,13 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
                 .toList();
     }
 
-    @Override
-    public List<SolicitudServicio> buscarPorUsuario(String idUsuario) {
-        Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(idUsuario);
-        return usuarioOptional.map(solicitudServicioRepository::findByUsuario)
-                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
-    }
 
     @Override
     public SolicitudServicioDto guardarSolicitudServicio(SolicitudServicioDto solicitudServicioDto) {
-        Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(solicitudServicioDto.getUsuarioId());
+        DetalleUsuario user = getPrincipal();
+        Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(user.getId());
         if (usuarioOptional.isEmpty()) {
-            throw new NotFoundException("No se encontró el usuario con id: " + solicitudServicioDto.getUsuarioId());
+            throw new NotFoundException("No se encontró el usuario con id: " + user.getId());
         }
         Optional<TipoServicio> tipoServicioOptional = this.tipoServicioRepository.findByTipo(solicitudServicioDto.getTipo());
         if (tipoServicioOptional.isEmpty()) {
@@ -88,10 +113,19 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
         return this.mapper.toDto(solicitudGuardada);
     }
 
+    private static DetalleUsuario getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (DetalleUsuario) authentication.getPrincipal();
+    }
+
     @Override
     public boolean eliminar(Long id) {
+        DetalleUsuario user = getPrincipal();
         try {
             return this.solicitudServicioRepository.findById(id).map(solicitudServicio -> {
+                if(!solicitudServicio.getUsuario().getId().equals(user.getId())) {
+                    throw new NotFoundException("No se encontró la solicitud de servicio con id: " + id);
+                }
                 solicitudServicio.setActiva(false);
                 solicitudServicioRepository.save(solicitudServicio);
                 return Boolean.TRUE;

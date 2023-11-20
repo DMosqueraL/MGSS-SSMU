@@ -3,10 +3,14 @@ package apiserviciotransporte.apiserviciotransporte.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,15 +27,24 @@ public class Usuario {
     @Column(name = "email", length = 100, unique = true)
     private String email;
 
-    @Column(name = "nombre_completo", length = 50)
+    @Column(name = "nombre_completo")
     private String nombreCompleto;
 
-    @Column(name = "telefono", length = 30)
+    @Column(name = "telefono")
     private String telefono;
+
+    @Column(name = "contrasena", length = 300)
+    private String contrasena;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private List<SolicitudServicio> solicitudesServicio;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "detail_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 }
