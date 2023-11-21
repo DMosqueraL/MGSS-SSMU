@@ -19,10 +19,6 @@ public class SolicitudPaqueteDto {
 
     private boolean activa;
 
-    @NotEmpty(message = "El id del usuario no puede ser vacío")
-    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}", message = "El id del usuario no es un uuid")
-    private String usuarioId;
-
     @NotEmpty(message = "El origen no puede ser vacio")
     private String origen;
 

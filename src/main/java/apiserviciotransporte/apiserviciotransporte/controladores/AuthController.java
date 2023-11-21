@@ -3,6 +3,7 @@ package apiserviciotransporte.apiserviciotransporte.controladores;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserLoginRequestDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserLoginResponseDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserRegisterRequestDto;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.UsuarioDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
 import apiserviciotransporte.apiserviciotransporte.interfaces.AuthService;
 import jakarta.validation.Valid;
@@ -34,10 +35,10 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return this.getServerResponseErrorEntity(bindingResult);
         }
-        this.authService.register(userRegisterRequestDto);
+        UsuarioDto registered = this.authService.register(userRegisterRequestDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .build();
+                .body(registered);
     }
 
     @PreAuthorize("permitAll()")

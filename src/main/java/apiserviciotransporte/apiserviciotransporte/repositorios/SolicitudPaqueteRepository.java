@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface SolicitudPaqueteRepository extends JpaRepository<SolicitudPaquete, Long>, QueryByExampleExecutor<SolicitudPaquete> {
     List<SolicitudPaquete> findByFecha(LocalDateTime fecha);
-    List<SolicitudPaquete> findByUsuario(Usuario usuario);
+    Page<SolicitudPaquete> findAllByUsuarioAndActiva(Usuario usuario, boolean activa, Pageable pageable);
     Page<SolicitudPaquete> findAllByActiva(boolean activa, Pageable pageable);
 
 

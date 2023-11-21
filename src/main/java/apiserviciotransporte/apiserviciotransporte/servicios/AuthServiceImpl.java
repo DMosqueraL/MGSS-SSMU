@@ -4,6 +4,7 @@ import apiserviciotransporte.apiserviciotransporte.config.security.jwt.JwtProvid
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserLoginRequestDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserLoginResponseDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserRegisterRequestDto;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.UsuarioDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
 import apiserviciotransporte.apiserviciotransporte.entidades.Role;
 import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
@@ -14,21 +15,17 @@ import apiserviciotransporte.apiserviciotransporte.mappers.UsuarioMapper;
 import apiserviciotransporte.apiserviciotransporte.repositorios.RoleRepository;
 import apiserviciotransporte.apiserviciotransporte.repositorios.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
 
     @Override
-    public void register(UserRegisterRequestDto userRegisterRequestDto) {
+    public UsuarioDto register(UserRegisterRequestDto userRegisterRequestDto) {
         boolean existByEmail = this.usuarioRepository.existsByEmail(userRegisterRequestDto.getEmail());
         if (existByEmail) {
             throw new ConflictException("El usuario con el correo " + userRegisterRequestDto.getEmail() + " ya existe");
@@ -50,13 +47,15 @@ public class AuthServiceImpl implements AuthService {
         if (roleOptional.isEmpty()) {
             throw new ConflictException("El rol " + userRegisterRequestDto.getRole() + " no existe");
         }
+        Role role = roleOptional.get();
         Usuario entity = this.mapper.toEntity(userRegisterRequestDto)
                 .toBuilder()
                 .contrasena(this.passwordEncoder.encode(String.valueOf(userRegisterRequestDto.getPassword())))
-                .roles(Set.of(roleOptional.get()))
+                .roles(Set.of(role))
                 .build();
 
-        this.usuarioRepository.save(entity);
+        Usuario saved = this.usuarioRepository.save(entity);
+        return this.mapper.toDto(saved);
     }
 
     @Override

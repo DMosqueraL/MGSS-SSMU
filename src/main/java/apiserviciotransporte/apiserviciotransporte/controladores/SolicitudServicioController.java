@@ -63,6 +63,7 @@ public class SolicitudServicioController {
                 .body(responseDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para obtener una solicitud de servicio en SSMU por su id")
     @ApiResponse(responseCode = "200", description = "Operación Exitosa")
     @GetMapping(value = "/{id}", produces = "application/json")
@@ -73,6 +74,7 @@ public class SolicitudServicioController {
                 .body(solciitudDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para buscar una solicitud de servicio en SSMU por fecha")
     @ApiResponse(responseCode = "200", description = "Solicitud de Servicio por fecha obtenida con éxito")
     @GetMapping(value = "/date/{fecha}", produces = "application/json")
@@ -83,8 +85,9 @@ public class SolicitudServicioController {
                 .body(solicitudes);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para eliminar una solicitud de servicio en SSMU")
-    @ApiResponse(responseCode = "200", description = "Solicitud de Servicio eliminada con éxito")
+    @ApiResponse(responseCode = "204", description = "Solicitud de Servicio eliminada con éxito")
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<SolicitudDeleteResponseDto> eliminar(@PathVariable("id") long id) {
         boolean eliminado = solicitudServicio.eliminar(id);

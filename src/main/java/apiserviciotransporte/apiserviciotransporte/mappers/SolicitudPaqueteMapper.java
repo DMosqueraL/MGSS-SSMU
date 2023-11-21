@@ -31,7 +31,6 @@ public class SolicitudPaqueteMapper {
     public SolicitudPaqueteDto toDto(SolicitudPaquete entity) {
         return SolicitudPaqueteDto.builder()
                 .id(entity.getId())
-                .usuarioId(entity.getUsuario().getId())
                 .origen(entity.getOrigen())
                 .activa(entity.isActiva())
                 .destino(entity.getDestino())

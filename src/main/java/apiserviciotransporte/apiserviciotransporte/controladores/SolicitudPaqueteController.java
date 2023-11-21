@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class SolicitudPaqueteController {
 
     private final SolicitudPaqueteService solicitudPaqueteService;
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para realizar una solicitud de servicio en SSMU")
     @ApiResponse(responseCode = "200", description = "Solicitud Realizada con Éxito")
     @PostMapping(value = "", consumes = "application/json", produces = "application/json")
@@ -42,6 +44,7 @@ public class SolicitudPaqueteController {
                 .body(solicitudGuardada);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para obtener el listado de solicitudes realizadas en SSMU")
     @ApiResponse(responseCode = "200", description = "Listado de Solicitudes de Servicio")
     @GetMapping(value = "", produces = "application/json")
@@ -49,12 +52,13 @@ public class SolicitudPaqueteController {
             @RequestParam("page") int page,
             @RequestParam("size") int size
     ) {
-        SolicitudesPaqueteResponseDto responseDto = this.solicitudPaqueteService.listar(page, size);
+        SolicitudesPaqueteResponseDto responseDto = this.solicitudPaqueteService.listarPorUsuario(page, size);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responseDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para obtener una solicitud de servicio en SSMU por su id")
     @ApiResponse(responseCode = "200", description = "Operación Exitosa")
     @GetMapping(value = "/{id}", produces = "application/json")
@@ -65,6 +69,7 @@ public class SolicitudPaqueteController {
                 .body(solciitudDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para buscar una solicitud de servicio en SSMU por fecha")
     @ApiResponse(responseCode = "200", description = "Solicitud de Servicio por fecha obtenida con éxito")
     @GetMapping(value = "/date/{fecha}", produces = "application/json")
@@ -75,6 +80,7 @@ public class SolicitudPaqueteController {
                 .body(solicitudes);
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para eliminar una solicitud de servicio en SSMU")
     @ApiResponse(responseCode = "200", description = "Solicitud de Servicio eliminada con éxito")
     @DeleteMapping(value = "/{id}", produces = "application/json")
