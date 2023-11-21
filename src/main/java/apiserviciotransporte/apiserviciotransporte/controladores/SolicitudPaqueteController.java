@@ -1,25 +1,21 @@
 package apiserviciotransporte.apiserviciotransporte.controladores;
+
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudDeleteResponseDto;
-import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
-import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
-import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudPaqueteDto;
+import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesPaqueteResponseDto;
+import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudPaquete;
+import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudPaqueteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -27,37 +23,33 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/solicitudes-servicios")
+@RequestMapping("/api/v1/solicitudes-paquetes")
 @RequiredArgsConstructor
-public class SolicitudServicioController {
+public class SolicitudPaqueteController {
 
-    private final SolicitudServicioService solicitudServicio;
+    private final SolicitudPaqueteService solicitudPaqueteService;
 
-    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para realizar una solicitud de servicio en SSMU")
     @ApiResponse(responseCode = "200", description = "Solicitud Realizada con Éxito")
     @PostMapping(value = "", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> crearSolicitudServicio(@Valid @RequestBody SolicitudServicioDto solicitudServicioDto, BindingResult bindingResult) {
-
+    public ResponseEntity<?> crearSolicitudPaquete(@Valid @RequestBody SolicitudPaqueteDto solicitudPaqueteDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return this.getServerResponseErrorEntity(bindingResult);
         }
-        SolicitudServicioDto solicitudGuardada = this.solicitudServicio.guardarSolicitudServicio(solicitudServicioDto);
+        SolicitudPaqueteDto solicitudGuardada = this.solicitudPaqueteService.guardarSolicitudPaquete(solicitudPaqueteDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(solicitudGuardada);
     }
 
-    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para obtener el listado de solicitudes realizadas en SSMU")
     @ApiResponse(responseCode = "200", description = "Listado de Solicitudes de Servicio")
     @GetMapping(value = "", produces = "application/json")
-    public ResponseEntity<SolicitudesServicioResponseDto> listarPorUsuario(
+    public ResponseEntity<SolicitudesPaqueteResponseDto> listarSolicitudesDeServicio(
             @RequestParam("page") int page,
-            @RequestParam("size") int size,
-            @RequestParam("type") SolicitudServicioDto.TipoSolicitud type
+            @RequestParam("size") int size
     ) {
-        SolicitudesServicioResponseDto responseDto = this.solicitudServicio.listarPorUsuario(page, size, type);
+        SolicitudesPaqueteResponseDto responseDto = this.solicitudPaqueteService.listar(page, size);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responseDto);
@@ -66,8 +58,8 @@ public class SolicitudServicioController {
     @Operation(summary = "- Endpoint para obtener una solicitud de servicio en SSMU por su id")
     @ApiResponse(responseCode = "200", description = "Operación Exitosa")
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<SolicitudServicioDto> obtener(@PathVariable long id) {
-        SolicitudServicioDto solciitudDto = solicitudServicio.obtener(id);
+    public ResponseEntity<SolicitudPaqueteDto> obtener(@PathVariable long id) {
+        SolicitudPaqueteDto solciitudDto = solicitudPaqueteService.obtener(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(solciitudDto);
@@ -76,8 +68,8 @@ public class SolicitudServicioController {
     @Operation(summary = "- Endpoint para buscar una solicitud de servicio en SSMU por fecha")
     @ApiResponse(responseCode = "200", description = "Solicitud de Servicio por fecha obtenida con éxito")
     @GetMapping(value = "/date/{fecha}", produces = "application/json")
-    public ResponseEntity<List<SolicitudServicioDto>> buscarPorFecha(@PathVariable("fecha") LocalDateTime fecha) {
-        List<SolicitudServicioDto> solicitudes = solicitudServicio.buscarPorFecha(fecha);
+    public ResponseEntity<List<SolicitudPaqueteDto>> buscarPorFecha(@PathVariable("fecha") LocalDateTime fecha) {
+        List<SolicitudPaqueteDto> solicitudes = solicitudPaqueteService.buscarPorFecha(fecha);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(solicitudes);
@@ -87,7 +79,7 @@ public class SolicitudServicioController {
     @ApiResponse(responseCode = "200", description = "Solicitud de Servicio eliminada con éxito")
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<SolicitudDeleteResponseDto> eliminar(@PathVariable("id") long id) {
-        boolean eliminado = solicitudServicio.eliminar(id);
+        boolean eliminado = solicitudPaqueteService.eliminar(id);
         SolicitudDeleteResponseDto solicitudDeleteResponseDto = SolicitudDeleteResponseDto.builder()
                 .deleted(eliminado)
                 .build();
@@ -99,7 +91,7 @@ public class SolicitudServicioController {
     @Operation(summary = "- Endpoint para actualizar una solicitud de servicio en SSMU")
     @ApiResponse(responseCode = "200", description = "Solicitud de Servicio actualizada con éxito")
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public SolicitudServicio actualizar(@PathVariable("id") String id, @RequestBody SolicitudServicioDto solicitudServicio) {
+    public SolicitudPaquete actualizar(@PathVariable("id") String id, @RequestBody SolicitudPaqueteDto solicitudServicio) {
         return null;
     }
 

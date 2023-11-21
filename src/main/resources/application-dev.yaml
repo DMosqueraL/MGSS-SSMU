@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/solicitudes_transporte_db
     username: postgres
-    password: 12345
+    password: f54S2TvfwcLZaz
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -20,3 +20,13 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /doc/swagger-ui.html
+
+# AUTHENTICATION & AUTHORIZATION
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      access-token:
+        expiration: 86400000 # a day
+      id-token:
+        expiration: 604800000 # 7 days

@@ -13,3 +13,19 @@ spring:
         format_sql: ${JPA_HIBERNATE_FORMAT_SQL}
     database: ${JPA_DATABASE}
     database-platform: ${JPA_DATABASE_PLATFORM}
+
+springdoc:
+  api-docs:
+    enabled: ${SPRINGDOC_API_DOCS_ENABLED}
+  swagger-ui:
+    enabled: ${SPRINGDOC_SWAGGER_UI_ENABLED}
+    path: ${SPRINGDOC_SWAGGER_UI_PATH}
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET}
+      access-token:
+        expiration: ${JWT_ACCESS_TOKEN_EXP}
+      id-token:
+        expiration: ${JWT_ID_TOKEN_EXP}

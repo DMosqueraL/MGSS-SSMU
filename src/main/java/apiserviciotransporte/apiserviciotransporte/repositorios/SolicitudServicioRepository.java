@@ -15,6 +15,7 @@ public interface SolicitudServicioRepository extends JpaRepository<SolicitudServ
     List<SolicitudServicio> findByFecha(LocalDateTime fecha);
     List<SolicitudServicio> findByUsuario(Usuario usuario);
     Page<SolicitudServicio> findAllByActivaAndInmediato(boolean activa, boolean inmediato, Pageable pageable);
+    Page<SolicitudServicio> findAllByUsuarioAndActivaAndInmediato(Usuario usuario, boolean activa, boolean inmediato, Pageable pageable);
 
 
 }
