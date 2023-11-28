@@ -1,7 +1,8 @@
 package apiserviciotransporte.apiserviciotransporte.mappers;
 
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudPaqueteDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.*;
+import apiserviciotransporte.apiserviciotransporte.entidades.DimensionesPaquete;
+import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudPaquete;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ public class SolicitudPaqueteMapper {
                 .destino(dto.getDestino())
                 .fecha(dto.getFecha())
                 .build();
+
     }
 
     public SolicitudPaqueteDto toDto(SolicitudPaquete entity) {
@@ -47,6 +49,7 @@ public class SolicitudPaqueteMapper {
                 .destino(entity.getDestino())
                 .fecha(entity.getFecha())
                 .build();
+
     }
 
 }

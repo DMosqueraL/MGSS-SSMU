@@ -2,7 +2,6 @@ package apiserviciotransporte.apiserviciotransporte.servicios;
 
 import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
 import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
-import apiserviciotransporte.apiserviciotransporte.interfaces.UsuarioService;
 import apiserviciotransporte.apiserviciotransporte.repositorios.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

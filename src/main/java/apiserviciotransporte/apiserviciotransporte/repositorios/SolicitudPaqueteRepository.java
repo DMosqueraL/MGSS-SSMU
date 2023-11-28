@@ -1,7 +1,6 @@
 package apiserviciotransporte.apiserviciotransporte.repositorios;
 
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudPaquete;
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

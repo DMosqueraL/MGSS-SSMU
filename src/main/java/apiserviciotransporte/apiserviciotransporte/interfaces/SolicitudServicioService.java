@@ -2,7 +2,6 @@ package apiserviciotransporte.apiserviciotransporte.interfaces;
 
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 
 import java.time.LocalDateTime;
 import java.util.List;

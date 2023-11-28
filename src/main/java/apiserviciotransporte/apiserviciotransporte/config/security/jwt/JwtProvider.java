@@ -1,5 +1,6 @@
 package apiserviciotransporte.apiserviciotransporte.config.security.jwt;
 
+
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserLoginResponseDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
 import apiserviciotransporte.apiserviciotransporte.entidades.Role;
@@ -10,10 +11,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.*;

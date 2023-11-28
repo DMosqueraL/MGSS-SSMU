@@ -1,6 +1,5 @@
 package apiserviciotransporte.apiserviciotransporte.controladores.dto;
 
-import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 import lombok.*;
 
 import java.util.List;

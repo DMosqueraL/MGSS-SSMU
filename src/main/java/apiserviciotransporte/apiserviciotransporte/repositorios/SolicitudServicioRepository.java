@@ -3,7 +3,6 @@ package apiserviciotransporte.apiserviciotransporte.repositorios;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;

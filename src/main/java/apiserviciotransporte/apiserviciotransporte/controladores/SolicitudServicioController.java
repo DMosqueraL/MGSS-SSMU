@@ -3,25 +3,21 @@ package apiserviciotransporte.apiserviciotransporte.controladores;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudDeleteResponseDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
 import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.models.annotations.OpenAPI30;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +27,12 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/solicitudes-servicios")
 @RequiredArgsConstructor
+@Tag(name = "Solicitud de Servicio")
 public class SolicitudServicioController {
 
     private final SolicitudServicioService solicitudServicio;
 
-    @PreAuthorize("hasRole('ROLE_USUARIO')")
+    //@PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para realizar una solicitud de servicio en SSMU")
     @ApiResponse(responseCode = "200", description = "Solicitud Realizada con Éxito")
     @PostMapping(value = "", consumes = "application/json", produces = "application/json")
@@ -50,7 +47,7 @@ public class SolicitudServicioController {
                 .body(solicitudGuardada);
     }
 
-    @PreAuthorize("hasRole('ROLE_USUARIO')")
+    //@PreAuthorize("hasRole('ROLE_USUARIO')")
     @Operation(summary = "- Endpoint para obtener el listado de solicitudes realizadas en SSMU")
     @ApiResponse(responseCode = "200", description = "Listado de Solicitudes de Servicio")
     @GetMapping(value = "", produces = "application/json")

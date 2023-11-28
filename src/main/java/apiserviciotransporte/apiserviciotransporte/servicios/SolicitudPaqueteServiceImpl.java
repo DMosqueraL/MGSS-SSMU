@@ -3,7 +3,6 @@ package apiserviciotransporte.apiserviciotransporte.servicios;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudPaqueteDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesPaqueteResponseDto;
 import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudPaquete;
-import apiserviciotransporte.apiserviciotransporte.entidades.TipoServicio;
 import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
 import apiserviciotransporte.apiserviciotransporte.excepciones.NotFoundException;
 import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudPaqueteService;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

@@ -3,7 +3,6 @@ package apiserviciotransporte.apiserviciotransporte.entidades;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 @Builder
 @AllArgsConstructor

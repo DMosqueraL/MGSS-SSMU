@@ -22,7 +22,4 @@ public class TipoServicio {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private SolicitudServicioDto.EnumTipoServicio tipo;
-
-
-
 }

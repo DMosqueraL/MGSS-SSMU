@@ -2,7 +2,10 @@ package apiserviciotransporte.apiserviciotransporte.servicios;
 
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudesServicioResponseDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.*;
+import apiserviciotransporte.apiserviciotransporte.entidades.DetalleUsuario;
+import apiserviciotransporte.apiserviciotransporte.entidades.SolicitudServicio;
+import apiserviciotransporte.apiserviciotransporte.entidades.TipoServicio;
+import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
 import apiserviciotransporte.apiserviciotransporte.excepciones.NotFoundException;
 import apiserviciotransporte.apiserviciotransporte.interfaces.SolicitudServicioService;
 import apiserviciotransporte.apiserviciotransporte.mappers.SolicitudServicioMapper;
@@ -134,70 +137,4 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
             return false;
         }
     }
-//
-//    /***** Adicionales *****/
-//
-//    @Override
-//    public List<SolicitudAdicional> listarAdicionales(Long id) {
-//        // Buscar la solicitud por su ID
-//        var solicitudServicioBuscada = solicitudServicioRepository.findById(id);
-//
-//        if (solicitudServicioBuscada.isPresent()) {
-//            var solicitudServicio = solicitudServicioBuscada.get();
-//
-//        }
-//        return null;
-//    }
-
-//    public void agregarAdicional(Long id, SolicitudAdicional solicitudAdicionales) {
-//        // Buscar la solicitud por su ID
-//        var solicitudServicioBuscada = solicitudServicioRepository.findById(id);
-//
-//        if (solicitudServicioBuscada.isPresent()) {
-//            var solicitudServicio = solicitudServicioBuscada.get();
-//
-//            // Agregar el adicional a la lista de adicionales de la solicitud
-//            // solicitudServicio.getCondicionesServicio().add(solicitudAdicionales);
-//
-//            // Actualizar el autor en la base de datos
-//            solicitudServicioRepository.save(solicitudServicio);
-//        } else {
-//            // Manejar el caso en que no se encuentra la solicitud
-//            throw new EntityNotFoundException("No se encontró la Solicitud de Servicio con ID: " + id);
-//        }
-//    }
-//
-//    /***** Paradas *****/
-//
-//    @Override
-//    public List<SolicitudParada> listarParadas(Long id) {
-//        // Buscar la solicitud por su ID
-//        var solicitudServicioBuscada = solicitudServicioRepository.findById(id);
-//
-//        if (solicitudServicioBuscada.isPresent()) {
-//            var solicitudServicio = solicitudServicioBuscada.get();
-//
-//            return solicitudServicio.getParadas();
-//        }
-//        return null;
-//    }
-//
-//    public void agregarParada(Long id, SolicitudParada solicitudParada) {
-//        // Buscar la solicitud por su ID
-//        var solicitudServicioBuscada = solicitudServicioRepository.findById(id);
-//
-//        if (solicitudServicioBuscada.isPresent()) {
-//            var solicitudServicio = solicitudServicioBuscada.get();
-//
-//            // Agregar el adicional a la lista de adicionales de la solicitud
-//            solicitudServicio.getParadas().add(solicitudParada);
-//
-//            // Actualizar el autor en la base de datos
-//            solicitudServicioRepository.save(solicitudServicio);
-//        } else {
-//            // Manejar el caso en que no se encuentra la solicitud
-//            throw new EntityNotFoundException("No se encontró la Solicitud de Servicio con ID: " + id);
-//        }
-//    }
-
 }

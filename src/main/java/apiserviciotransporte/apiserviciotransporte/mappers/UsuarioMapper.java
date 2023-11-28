@@ -1,15 +1,12 @@
 package apiserviciotransporte.apiserviciotransporte.mappers;
 
-import apiserviciotransporte.apiserviciotransporte.controladores.dto.SolicitudServicioDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UserRegisterRequestDto;
 import apiserviciotransporte.apiserviciotransporte.controladores.dto.UsuarioDto;
-import apiserviciotransporte.apiserviciotransporte.entidades.*;
+import apiserviciotransporte.apiserviciotransporte.entidades.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor

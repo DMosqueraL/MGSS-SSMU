@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/solicitudes_transporte_db
     username: postgres
-    password: f54S2TvfwcLZaz
+    password: 12345 #Recuerden cambiar la contraseña propia de uds para que les funcione la BBDD
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
